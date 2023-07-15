@@ -23,13 +23,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "eject": "react-scripts eject",
+    "lint": "eslint -c .eslintrc --ext .js,.ts,.jsx,.tsx",
+    "lint:fix": "npm run lint -- --fix"
   },
   "browserslist": {
     "production": [
@@ -44,6 +40,8 @@
     ]
   },
   "devDependencies": {
+    "eslint-config-prettier": "^8.8.0",
+    "prettier": "3.0.0",
     "tailwindcss": "^3.3.3"
   }
 }

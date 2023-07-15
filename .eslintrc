@@ -1,0 +1,30 @@
+{
+    "extends": [
+      "react-app",
+      "react-app/jest",
+      "prettier"
+    ], "rules": {
+      "no-unused-vars":"warn",
+      "no-console":"warn",
+      "prefer-const":"warn",
+      
+      // "import/order": [
+      //   "warn",
+      //   {
+      //     "groups": [
+      //       "index",
+      //       "sibling",
+      //       "parent",
+      //       "internal",
+      //       "external",
+      //       "builtin",
+      //       "object",
+      //       "type"
+      //     ]
+      //   }
+      // ],
+      // "react/jsx-no-useless-fragment": 0,
+      "import/prefer-default-export": 0
+      }
+      
+  }
