@@ -1,26 +1,35 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logo from "../../images/rmlogo.png";
+import { useAuth } from "./../../hooks/useAuth";
 
 export function Navigations() {
+  const { isAuth } = useAuth();
+
   return (
-    <nav className="flex justify-between items-center px-5 ">
-      <div className="flex justify-start items-center gap-5">
-        <Link to="/">
-          <div className="w-[100px]">
-            <img src={logo} alt="RickMorty" />
-          </div>
-        </Link>
-        <Link to="/">
-          <h3 className="font-bold text-2xl">Rick and Morty App</h3>
-        </Link>
-      </div>
-      <span className=" flex gap-5">
-        <Link to="/signup">Регистрация</Link>
-        <Link to="/signin">Вход</Link>
-        <Link to="/">Главная</Link>
-        <Link to="/search">Поиск</Link>
-        <Link to="/favorites">Избранное</Link>
+    <nav>
+      <span className="flex gap-5">
+        {isAuth ? (
+          <>
+            <Link to="/history">
+              <span>История</span>
+            </Link>
+            <Link to="/search">
+              <span>Поиск</span>
+            </Link>
+            <Link to="/favorites">
+              <span>Избранное</span>
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link to="/signup">
+              <span>Регистрация</span>
+            </Link>
+            <Link to="/signin">
+              <span>Вход</span>
+            </Link>
+          </>
+        )}
       </span>
     </nav>
   );

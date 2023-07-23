@@ -1,5 +1,6 @@
 import React from "react";
+import { SignIn } from "../../components/SignIn/SignIn";
 
 export function SignInPage() {
-  return <div></div>;
+  return <SignIn />;
 }

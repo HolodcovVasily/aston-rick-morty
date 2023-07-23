@@ -1,8 +1,4 @@
-import {
-  createApi,
-  defaultSerializeQueryArgs,
-  fetchBaseQuery,
-} from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { ICharacter, IServerResponse, IInfo } from "../../models/models";
 const BASE_URL = "https://rickandmortyapi.com/api";
 
@@ -21,11 +17,11 @@ export const rickMortyApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
   }),
-  refetchOnFocus: true,
+  // refetchOnFocus: true,
   endpoints: (build) => ({
     getCharacters: build.query<ResponseGetCharWithInfo, number>({
       query: (page: number) => ({
-        url: "/character",
+        url: `character/`,
         params: {
           page: page,
         },
@@ -33,9 +29,11 @@ export const rickMortyApi = createApi({
       serializeQueryArgs: ({ endpointName }) => {
         return endpointName;
       },
+      // Always merge incoming data to the cache entry
       merge: (currentCache, newItems) => {
         currentCache.results.push(...newItems.results);
       },
+      // Refetch when the page arg changes
       forceRefetch({ currentArg, previousArg }) {
         return currentArg !== previousArg;
       },
@@ -54,9 +52,14 @@ export const rickMortyApi = createApi({
         return response.results;
       },
     }),
-    getCharachterInfo: build.query<ICharacter, number>({
+    getCharachterInfo: build.query<ICharacter, number | null>({
       query: (id: number) => ({
         url: `/character/${id}`,
+      }),
+    }),
+    getMultipleCharachters: build.query<ICharacter[], number[] | null>({
+      query: (ids: number[]) => ({
+        url: `/character/${ids}`,
       }),
     }),
   }),
@@ -66,4 +69,6 @@ export const {
   useGetCharactersQuery,
   useSearchCharactersQuery,
   useLazyGetCharachterInfoQuery,
+  useGetCharachterInfoQuery,
+  useGetMultipleCharachtersQuery,
 } = rickMortyApi;

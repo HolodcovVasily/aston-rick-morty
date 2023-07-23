@@ -5,8 +5,14 @@ import {
   useLazyGetCharachterInfoQuery,
 } from "../../store/rickMorty/rickMorty.api";
 import { useDebounce } from "./../../hooks/debounce";
+import { Navigate } from "react-router-dom";
+import { useAuth } from "./../../hooks/useAuth";
+import { useActions } from "./../../hooks/actions";
 
-export function SearchPage() {
+export default function SearchPage() {
+  const { isAuth } = useAuth();
+  const { addToHistory } = useActions();
+
   const [search, setSearch] = useState("");
   const [dropDown, setDropDown] = useState(false);
   const debounced = useDebounce(search);
@@ -28,11 +34,16 @@ export function SearchPage() {
 
   const clickHandler = (id: number) => {
     fetchCharacter(id);
+    addToHistory(id);
     setSearch("");
   };
 
+  if (!isAuth) {
+    return <Navigate to="/signin" />;
+  }
+
   return (
-    <div className="flex flex-auto justify-center pt-10 mx-auto w-screen mt-20">
+    <div className="flex flex-auto justify-center pt-5 mx-auto mt-2">
       <div className="relative w-[560px]">
         {isError && (
           <div className="mb-2">

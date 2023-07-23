@@ -9,7 +9,12 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: linear-gradient(to top, #c471f5 0%, #fa71cd 100%);
+  /* background-image: linear-gradient(to top, #c471f5 0%, #fa71cd 100%); */
+  background-image: url('https://rick-i-morty.online/wp-content/uploads/2022/10/Vindicators211.jpg');
+  background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: 50% 0%;
 }
 
 #root {

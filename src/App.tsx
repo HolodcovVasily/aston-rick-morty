@@ -1,25 +1,27 @@
-import React from "react";
+import React, { Suspense } from "react";
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { Header } from "./components/Header/Header";
-import { HomePage } from "./pages/HomePage/HomePage";
-import { FavoritesPage } from "./pages/FavoritesPage/FavoritesPage";
-import { SignInPage } from "./pages/SignInPage/SignInPage";
-import { SignUpPage } from "./pages/SignUpPage/SignUpPage";
 import Footer from "./components/Footer/Footer";
-import { SearchPage } from "./pages/SearchPage/SearchPage";
+import { routesConfig } from "./routes/routesConfig";
+import app from "./firebase";
+import ErrorBoundary from "./components/ErrorBoundaries/ErrorBoundaries";
 
 function App() {
   return (
     <>
       <Header />
-      <Routes>
-        <Route path="/signin" element={<SignInPage />}></Route>
-        <Route path="/signup" element={<SignUpPage />}></Route>
-        <Route path="/" element={<HomePage />}></Route>
-        <Route path="/search" element={<SearchPage />}></Route>
-        <Route path="/favorites" element={<FavoritesPage />}></Route>
-      </Routes>
+      <ErrorBoundary>
+        <Suspense fallback={<div className="text-center">Loading....</div>}>
+          <Routes>
+            {routesConfig.map((route, id) => {
+              return (
+                <Route key={id} path={route.path} element={route.element} />
+              );
+            })}
+          </Routes>
+        </Suspense>
+      </ErrorBoundary>
       <Footer />
     </>
   );

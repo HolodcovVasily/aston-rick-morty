@@ -1,28 +1,32 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-const KEY_FAVORITES = "favoritesChar";
-
 interface IFavoritesState {
-  favorites: string[];
+  favorites: number[];
 }
 
 const initialState: IFavoritesState = {
-  favorites: JSON.parse(localStorage.getItem(KEY_FAVORITES) ?? "[]"),
+  favorites: [],
 };
 
 export const favoritesSlice = createSlice({
   name: "favorites",
   initialState,
   reducers: {
-    addToFavorites(state, action: PayloadAction<string>) {
-      state.favorites.push(action.payload);
-      localStorage.setItem(KEY_FAVORITES, JSON.stringify(state.favorites));
-    },
-    removeFromFavorites(state, action: PayloadAction<string>) {
-      state.favorites = state.favorites.filter(
-        (elem) => elem !== action.payload
+    toggleFavorites(state, action: PayloadAction<number>) {
+      const isFavorite = state.favorites.some(
+        (elem) => elem === action.payload
       );
-      localStorage.setItem(KEY_FAVORITES, JSON.stringify(state.favorites));
+
+      if (isFavorite) {
+        state.favorites = state.favorites.filter(
+          (elem) => elem !== action.payload
+        );
+      } else {
+        state.favorites.push(action.payload);
+      }
+      localStorage.setItem("favorites", JSON.stringify(state.favorites));
+    },
+    deleteAll(state) {
+      return initialState;
     },
   },
 });
