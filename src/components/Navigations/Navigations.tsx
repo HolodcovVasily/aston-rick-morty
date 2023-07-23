@@ -1,15 +1,35 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "./../../hooks/useAuth";
 
 export function Navigations() {
+  const { isAuth } = useAuth();
+
   return (
-    <nav className="flex justify-between items-center  h-[80px] px-5 ">
-      <h1 className="font-bold">Rick and Morty App</h1>
-      <span className=" flex gap-5">
-        <Link to="/signup">Sign up</Link>
-        <Link to="/signin">Sign in</Link>
-        <Link to="/">Home</Link>
-        <Link to="/favorites">Favorites</Link>
+    <nav>
+      <span className="flex gap-5">
+        {isAuth ? (
+          <>
+            <Link to="/history">
+              <span>История</span>
+            </Link>
+            <Link to="/search">
+              <span>Поиск</span>
+            </Link>
+            <Link to="/favorites">
+              <span>Избранное</span>
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link to="/signup">
+              <span>Регистрация</span>
+            </Link>
+            <Link to="/signin">
+              <span>Вход</span>
+            </Link>
+          </>
+        )}
       </span>
     </nav>
   );
